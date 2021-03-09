@@ -1,0 +1,31 @@
+Large_file
+sec61A.xtc is trajectory file in .xtc formate
+sec61A_last50ns.pdb is last 50ns trajectory file in .pdb formate
+
+All MD trajectory files will be provided by the coresponding author and pratiti.bhadra@gmail.com
+
+# Calculate RMSD
+gmx rms -f sec61A.xtc -s Sec61A_initial.pdb -n sec61A.ndx -skip 200 -o rmsd.xvg
+
+# Calculate Rg
+gmx gyrate -f sec61A.xtc -s Sec61A_initial.pdb -n sec61A.ndx -o Rg.xvg
+
+# Calcualte distance between n-terminals of TMs
+gmx distance -f sec61A_last50ns.pdb -s Sec61A_initial.pdb -oall distance.xvg -select 'com of group "tm4_n" plus com of group "tm1_n"' -n TM.ndx 
+
+# TM.ndx file
+[ tm4_n ]
+2353 2365 2384 2395  ; CA-atom numbers of thr N-terminus ring
+[ tm1_n ]
+476 490 507 529
+
+
+# Obtained the TM-helix vector ... TM7.ndx file have index of 4 Ca atoms from N-terminus (tm7_n) and C-terminus (tm7_c) of TM7 helix.
+gmx distance -f sec61A_last50ns.pdb -s Sec61A_initial.pdb -oxyz displacement.xvg -select 'com of group "tm7_n" plus com of group "tm7_c"' -n TM7.ndx
+
+
+
+
+
+
+
